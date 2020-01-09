@@ -1,6 +1,29 @@
-#INTERFACE="wlp2s0"
-#INTERFACE="enp0s31f6"
-INTERFACE=$1
+function advancedMenu() {
+    ADVSEL=$(whiptail --title "NMap Scan" --fb --menu "Choose an option" 15 60 4 \
+        "1" "eth0" \
+        "2" "wlan0" \
+        "3" "wlan1" 3>&1 1>&2 2>&3)
+    case $ADVSEL in
+        1)
+            echo "Fast Scanning Ethernet"
+            INTERFACE="eth0"
+        ;;
+        2)
+            echo "Fast Scanning WiFi"
+            INTERFACE="wlan0"
+        ;;
+        3)
+            echo "Fast Scanning WiFi"
+            INTERFACE="wlan1"
+        ;;
+    esac
+}
+
+if [[ -z "$1" ]]; then
+    advancedMenu
+else
+    INTERFACE=$1
+fi
 
 echo -n "Checking interface ${INTERFACE} exists ..."
 
